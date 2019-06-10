@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 public class QueryTest {
     private static final String ENDPOINT = System.getProperty("cosmosEndpoint");
     private static final String KEY = System.getProperty("cosmosKey");
-    private static final boolean CLEAN = Boolean.getBoolean("clean");
+    private static final boolean RESET_DATABASE = System.getProperty("resetDatabase") != null;
 
     private static final String DATABASE_ID = "cosmos-test";
     private static final String CONTAINER_ID = "inboxes";
@@ -43,7 +43,7 @@ public class QueryTest {
                 .withConsistencyLevel(ConsistencyLevel.Session)
                 .withConnectionPolicy(policy)
                 .build());
-        if (CLEAN) {
+        if (RESET_DATABASE) {
             client.getDatabase(DATABASE_ID)
                     .delete()
                     .then()

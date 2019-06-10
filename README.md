@@ -4,8 +4,8 @@ To run tests with existing database:
 
     $ mvn test -DcosmosEndpoint=<endpoint> -DcosmosKey=<key>
 
-To delete database before running tests:
+To reset database before running tests:
 
-    $ mvn test -DcosmosEndpoint=<endpoint> -DcosmosKey=<key> -Dclean=true
+    $ mvn test -DcosmosEndpoint=<endpoint> -DcosmosKey=<key> -DresetDatabase
 
 
