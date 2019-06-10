@@ -5,10 +5,8 @@ import com.microsoft.azure.cosmosdb.ConnectionMode;
 import com.microsoft.azure.cosmosdb.ConnectionPolicy;
 import com.microsoft.azure.cosmosdb.ConsistencyLevel;
 import com.microsoft.azure.cosmosdb.DocumentClientException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -61,6 +59,14 @@ public class QueryTest {
     @AfterClass
     public static void close() {
         Optional.ofNullable(client).ifPresent(CosmosClient::close);
+    }
+
+    @Rule
+    public final TestName name = new TestName();
+
+    @Before
+    public void logTestName() {
+        logger.info("*** Running test: {} ***", name.getMethodName());
     }
 
     private static void createEntries(String inboxId, int maxCount) {

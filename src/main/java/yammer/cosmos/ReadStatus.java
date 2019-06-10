@@ -1,3 +1,3 @@
 package yammer.cosmos;
 
-enum ReadStatus { READ, UNREAD }
+public enum ReadStatus { READ, UNREAD }

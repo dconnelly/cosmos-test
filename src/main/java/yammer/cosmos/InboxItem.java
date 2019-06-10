@@ -2,20 +2,20 @@ package yammer.cosmos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class InboxItem {
+public class InboxItem {
     @JsonProperty
-    final String id;
+    public final String id;
     @JsonProperty
-    final String inboxId;
+    public final String inboxId;
     @JsonProperty
-    final long sortKey;
+    public final long sortKey;
     @JsonProperty
-    final ReadStatus readStatus;
+    public final ReadStatus readStatus;
 
-    InboxItem(@JsonProperty("id") String id,
-              @JsonProperty("inboxId") String inboxId,
-              @JsonProperty("sortKey") long sortKey,
-              @JsonProperty("readStatus") ReadStatus readStatus) {
+    public InboxItem(@JsonProperty("id") String id,
+                     @JsonProperty("inboxId") String inboxId,
+                     @JsonProperty("sortKey") long sortKey,
+                     @JsonProperty("readStatus") ReadStatus readStatus) {
         this.id = id;
         this.inboxId = inboxId;
         this.sortKey = sortKey;
