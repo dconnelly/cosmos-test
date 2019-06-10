@@ -20,6 +20,8 @@ import java.util.stream.IntStream;
 public class QueryTest {
     private static final String ENDPOINT = System.getProperty("cosmosEndpoint");
     private static final String KEY = System.getProperty("cosmosKey");
+    private static final boolean CLEAN = Boolean.getBoolean("clean");
+
     private static final String DATABASE_ID = "cosmos-test";
     private static final String CONTAINER_ID = "inboxes";
     private static final String PARTITION_KEY_PATH = "/inboxId";
@@ -41,6 +43,13 @@ public class QueryTest {
                 .withConsistencyLevel(ConsistencyLevel.Session)
                 .withConnectionPolicy(policy)
                 .build());
+        if (CLEAN) {
+            client.getDatabase(DATABASE_ID)
+                    .delete()
+                    .then()
+                    .onErrorResume(QueryTest::isNotFound, e -> Mono.empty())
+                    .block();
+        }
         database = client.getDatabase(DATABASE_ID)
                 .read()
                 .onErrorResume(QueryTest::isNotFound, e -> client.createDatabase(DATABASE_ID)
@@ -84,14 +93,6 @@ public class QueryTest {
 
     private static boolean isNotFound(Throwable e) {
         return e instanceof DocumentClientException && ((DocumentClientException) e).getStatusCode() == 404;
-    }
-
-    @Test @Ignore
-    public void deleteDatabase() {
-        database.delete()
-                .then()
-                .onErrorResume(QueryTest::isNotFound, e -> Mono.empty())
-                .block();
     }
 
     @Test
